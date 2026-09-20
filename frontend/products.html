@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - CodeAlpha Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>CodeAlpha Store</h1>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart 🛒</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<main class="products-section">
+
+    <h2>Our Products</h2>
+
+    <div class="product-grid">
+
+        <div class="product-card">
+            <div class="product-image">👟</div>
+            <h3>Running Shoes</h3>
+            <p>Comfortable shoes for everyday use.</p>
+            <h4>₹1,499</h4>
+            <button onclick="addToCart('Running Shoes', 1499)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">🎧</div>
+            <h3>Wireless Headphones</h3>
+            <p>Enjoy high-quality wireless audio.</p>
+            <h4>₹1,999</h4>
+            <button onclick="addToCart('Wireless Headphones', 1999)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">⌚</div>
+            <h3>Smart Watch</h3>
+            <p>Track your fitness and daily activities.</p>
+            <h4>₹2,499</h4>
+            <button onclick="addToCart('Smart Watch', 2499)">
+                Add to Cart
+            </button>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image">🎒</div>
+            <h3>Travel Backpack</h3>
+            <p>Stylish and spacious backpack.</p>
+            <h4>₹999</h4>
+            <button onclick="addToCart('Travel Backpack', 999)">
+                Add to Cart
+            </button>
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    <p>© 2026 CodeAlpha Store</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+async function loadProducts() {
+    try {
+        const response = await fetch("http://localhost:5000/api/products");
+        const products = await response.json();
+
+        const productList = document.getElementById("product-list");
+
+        productList.innerHTML = "";
+
+        products.forEach(product => {
+            productList.innerHTML += `
+                <div class="product-card">
+                    <div class="product-image">🛍️</div>
+                    <h3>${product.name}</h3>
+                    <p>₹${product.price}</p>
+                    <p>${product.description}</p>
+                    <button onclick="addToCart('${product.name}', ${product.price})">
+                        Add to Cart
+                    </button>
+                </div>
+            `;
+        });
+
+    } catch (error) {
+        console.log("Error loading products:", error);
+    }
+}
+
+loadProducts();
+</script>
+
+</body>
+</html>
